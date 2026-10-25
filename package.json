@@ -1,0 +1,13 @@
+{
+  "name": "halloween-invite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Сайт-приглашение на Хэллоуин: отметки гостей и комментарии",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

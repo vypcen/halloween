@@ -1,13 +1,10 @@
 {
   "name": "halloween-invite",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Сайт-приглашение на Хэллоуин: отметки гостей и комментарии",
-  "main": "server.js",
+  "description": "Сайт-приглашение на Хэллоуин: отметки гостей и комментарии (Cloudflare Workers)",
   "scripts": {
-    "start": "node server.js"
-  },
-  "engines": {
-    "node": ">=18"
+    "dev": "npx wrangler dev",
+    "deploy": "npx wrangler deploy"
   }
 }

@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Хэллоуин 31.10</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" type="image/jpeg" href="images/icon.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ruslan+Display&family=Alice&family=Neucha&display=swap">
+<style>
+/* Layout: the poster as a lantern-lit window on the left, a parchment "guest book" on the right; stacks on phones. */
+:root {
+  --night: #15130f;      /* forest at night */
+  --moss: #23261c;       /* panel ground */
+  --bark: #3a3327;       /* lines, borders */
+  --parchment: #e9dcc0;  /* main text */
+  --faded: #a99c80;      /* secondary text */
+  --ember: #e0892e;      /* pumpkin / candle accent */
+  --frog: #8fa25a;       /* the vampire frog's green, used for "yes" */
+  --blood: #a6332b;      /* errors, the drop of blood */
+  --f-display: "Ruslan Display", "Alice", Georgia, serif;
+  --f-body: "Alice", Georgia, "Times New Roman", serif;
+  --f-hand: "Neucha", "Alice", "Comic Sans MS", cursive;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+[hidden] { display: none !important; }
+img { max-width: 100%; }
+body { margin: 0; }
+html { background: var(--night); }
+body {
+  background:
+    radial-gradient(1200px 600px at 85% -10%, rgba(224,137,46,.10), transparent 60%),
+    radial-gradient(900px 700px at 0% 110%, rgba(143,162,90,.08), transparent 60%),
+    var(--night);
+  color: var(--parchment);
+  font-family: var(--f-body);
+  font-size: 17px;
+  line-height: 1.55;
+  min-height: 100vh;
+}
+.wrap {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding-block: 32px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 28px 40px;
+  align-items: stretch;
+}
+@media (max-width: 860px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: 16px 48px; }
+}
+
+/* Poster: fills the right column from the header to the bottom of the last card; edges are cropped as needed */
+.poster {
+  position: relative;
+  margin: 0;
+  min-height: 420px;
+}
+.poster-frame {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.poster img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 40%;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px var(--bark), 0 30px 80px -20px rgba(0,0,0,.8), 0 0 120px -30px rgba(224,137,46,.35);
+}
+@media (max-width: 860px) {
+  .poster { min-height: 0; }
+  .poster-frame { position: static; }
+  .poster-frame { display: flex; justify-content: center; }
+  .poster img { width: auto; height: auto; max-width: 100%; max-height: 72vh; }
+}
+
+/* Right column */
+.book { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+
+.head { display: flex; gap: 18px; align-items: center; }
+.head .frog {
+  background: url("images/icon.jpg") 54% 48% / 165% no-repeat;
+  width: 84px; height: 84px; flex: none;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 2px var(--bark), 0 0 0 5px var(--night), 0 0 0 6px var(--ember);
+}
+.eyebrow {
+  font-family: var(--f-body);
+  text-transform: uppercase;
+  letter-spacing: .14em;
+  font-size: 12.5px;
+  color: var(--faded);
+  margin: 0 0 4px;
+}
+h1 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.05;
+  margin: 0;
+  text-wrap: balance;
+  color: var(--parchment);
+}
+
+.card {
+  background: var(--moss);
+  border: 1px solid var(--bark);
+  border-radius: 10px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+@media (max-width: 480px) { .card { padding: 18px; } }
+h2 {
+  font-family: var(--f-display);
+  font-weight: 400;
+  font-size: 22px;
+  margin: 0;
+  letter-spacing: .02em;
+  text-wrap: balance;
+}
+
+/* RSVP */
+.tally { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.tally .num {
+  font-family: var(--f-display);
+  font-size: clamp(64px, 12vw, 92px);
+  line-height: .9;
+  color: var(--ember);
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 28px rgba(224,137,46,.45);
+}
+.tally .lbl { font-size: 18px; color: var(--parchment); }
+.tally .sub { flex-basis: 100%; color: var(--faded); font-size: 14.5px; }
+
+label.field { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--faded); }
+input[type="text"], textarea {
+  font: inherit;
+  font-size: 16px;
+  color: var(--parchment);
+  background: var(--night);
+  border: 1px solid var(--bark);
+  border-radius: 8px;
+  padding: 11px 13px;
+  width: 100%;
+  box-sizing: border-box;
+}
+textarea { resize: vertical; min-height: 84px; font-family: var(--f-hand); font-size: 18px; line-height: 1.4; }
+input:focus-visible, textarea:focus-visible, button:focus-visible {
+  outline: 2px solid var(--ember);
+  outline-offset: 2px;
+}
+input:disabled { opacity: .7; }
+
+.choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+button {
+  font: inherit;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid var(--bark);
+  padding: 14px 16px;
+  transition: transform .12s ease, background-color .2s ease, box-shadow .2s ease;
+}
+button:active:not(:disabled) { transform: translateY(1px); }
+button:disabled { cursor: not-allowed; }
+.btn-yes, .btn-no {
+  font-family: var(--f-display);
+  font-size: 20px;
+  letter-spacing: .06em;
+}
+.btn-yes { background: var(--ember); color: var(--night); border-color: var(--ember); }
+.btn-yes:hover:not(:disabled) { box-shadow: 0 0 24px -4px var(--ember); }
+.btn-no { background: transparent; color: var(--parchment); }
+.btn-no:hover:not(:disabled) { background: var(--bark); }
+.choices button:disabled { opacity: .35; box-shadow: none; }
+.choices button.picked:disabled { opacity: 1; }
+.btn-no.picked { background: var(--bark); }
+
+.status { font-size: 15px; color: var(--faded); margin: 0; min-height: 1.4em; }
+.status.yes { color: var(--frog); }
+.status.err, .err { color: #e07a70; }
+
+.guests { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.guests li {
+  font-family: var(--f-hand);
+  font-size: 17px;
+  padding: 3px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--bark);
+  background: var(--night);
+}
+.guests li.me { border-color: var(--frog); color: var(--frog); }
+
+/* Comments */
+.compose { display: flex; flex-direction: column; gap: 10px; }
+.compose-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+.btn-send { background: var(--parchment); color: var(--night); border-color: var(--parchment); font-weight: 700; padding: 10px 20px; }
+.btn-send:disabled { opacity: .45; }
+.hint { font-size: 13px; color: var(--faded); }
+
+.thread { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0; max-height: 440px; overflow-y: auto; overscroll-behavior: contain; }
+.thread li { padding: 14px 0; border-top: 1px dashed var(--bark); min-width: 0; }
+.thread li:first-child { border-top: 0; padding-top: 4px; }
+.meta { display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; font-size: 13.5px; color: var(--faded); }
+.meta .who { color: var(--ember); font-size: 15px; }
+.meta .tag { font-size: 12px; color: var(--frog); }
+.btn-del {
+  margin-left: auto;
+  background: transparent;
+  color: var(--faded);
+  border: 1px solid var(--bark);
+  padding: 3px 10px;
+  font-size: 12.5px;
+  border-radius: 999px;
+}
+.btn-del:hover:not(:disabled) { color: var(--parchment); border-color: var(--faded); }
+.btn-del.armed { color: #e07a70; border-color: var(--blood); }
+.msg { font-family: var(--f-hand); font-size: 19px; line-height: 1.4; margin: 4px 0 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+.empty { color: var(--faded); font-style: italic; margin: 0; }
+
+.foot { font-size: 13px; color: var(--faded); text-align: center; margin: 0; }
+@media (min-width: 861px) { .foot { grid-column: 2; } }
+
+/* Access code */
+.gate {
+  position: fixed; inset: 0; z-index: 20;
+  display: grid; place-items: center;
+  background: rgba(10,9,7,.88);
+  backdrop-filter: blur(6px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.gate form { max-width: 360px; width: 100%; }
+.gate p { margin: 0; color: var(--faded); font-size: 15px; }
+.gate .btn-yes { width: 100%; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <figure class="poster">
+    <div class="poster-frame"><img src="images/poster.jpg" alt="Приглашение на Halloween 31.10: ждём всех в костюмах, приносите блюдо или снек, связанный с Хэллоуином. Штраф за отсутствие костюма: пиво, сидр или вино." width="853" height="1280"></div>
+  </figure>
+
+  <main class="book">
+    <header class="head">
+      <div class="frog" role="img" aria-label="Лягушка-вампир"></div>
+      <div>
+        <p class="eyebrow">Суббота, 31 октября</p>
+        <h1>Придёшь на&nbsp;Хэллоуин?</h1>
+      </div>
+    </header>
+
+    <section class="card" aria-labelledby="rsvp-h">
+      <h2 id="rsvp-h">Отметка о присутствии</h2>
+
+      <div class="tally" aria-live="polite">
+        <span class="num" id="count">0</span>
+        <span class="lbl" id="count-word">гостей придут</span>
+        <span class="sub" id="count-sub" hidden></span>
+      </div>
+
+      <label class="field" for="name">Как тебя подписать
+        <input type="text" id="name" maxlength="40" autocomplete="nickname" placeholder="Например, Лягушка-вампир">
+      </label>
+
+      <div class="choices">
+        <button type="button" class="btn-yes" id="yes">Буду</button>
+        <button type="button" class="btn-no" id="no">Не буду</button>
+      </div>
+      <p class="status" id="status" role="status">Загружаю ответы…</p>
+
+      <ul class="guests" id="guests" aria-label="Кто придёт"></ul>
+    </section>
+
+    <section class="card" aria-labelledby="chat-h">
+      <h2 id="chat-h">Комментарии</h2>
+
+      <form class="compose" id="compose">
+        <label class="field" for="text">Костюм, что принесёшь, вопросы
+          <textarea id="text" maxlength="600" placeholder="Я буду в костюме тыквы и принесу кексы с черепами"></textarea>
+        </label>
+        <div class="compose-row">
+          <span class="hint" id="chat-hint">Подпись берётся из поля «Как тебя подписать».</span>
+          <button type="submit" class="btn-send" id="send">Отправить</button>
+        </div>
+      </form>
+
+      <ul class="thread" id="thread">
+        <li><p class="empty">Пока никто не написал. Начни первым: расскажи, какой будет костюм.</p></li>
+      </ul>
+    </section>
+  </main>
+
+  <p class="foot">Штраф за отсутствие костюма: пиво, сидр или вино 🍷</p>
+</div>
+
+<div class="gate" id="gate" hidden>
+  <form class="card" id="gate-form">
+    <h2>Вход по коду</h2>
+    <p>Код есть у организатора. Ввести его нужно один раз на этом устройстве.</p>
+    <label class="field" for="gate-code">Код приглашения
+      <input type="text" id="gate-code" autocomplete="off" autocapitalize="off" spellcheck="false">
+    </label>
+    <p class="err" id="gate-err" hidden>Код не подошёл. Проверь и попробуй ещё раз.</p>
+    <button type="submit" class="btn-yes">Войти</button>
+  </form>
+</div>
+
+<script>
+(function () {
+  const $ = (id) => document.getElementById(id);
+  const els = {
+    count: $("count"), countWord: $("count-word"), countSub: $("count-sub"),
+    name: $("name"), yes: $("yes"), no: $("no"), status: $("status"),
+    guests: $("guests"), compose: $("compose"), text: $("text"),
+    send: $("send"), thread: $("thread"), chatHint: $("chat-hint"),
+    gate: $("gate"), gateForm: $("gate-form"), gateCode: $("gate-code"), gateErr: $("gate-err"),
+  };
+
+  const store = {
+    get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
+    set(k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
+  };
+
+  // Секретный токен этого браузера: по нему сервер узнаёт гостя.
+  let guest = store.get("halloween-guest");
+  if (!guest || !/^[A-Za-z0-9_-]{16,64}$/.test(guest)) {
+    const a = new Uint8Array(24);
+    (window.crypto || window.msCrypto).getRandomValues(a);
+    guest = Array.from(a, (b) => "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_"[b & 63]).join("");
+    store.set("halloween-guest", guest);
+  }
+  let code = store.get("halloween-code") || "";
+
+  let state = { rsvps: [], comments: [], me: null };
+  let online = false, saving = false, sending = false;
+
+  async function api(method, path, body) {
+    const res = await fetch(path, {
+      method,
+      headers: { "Content-Type": "application/json", "X-Guest": guest, "X-Access-Code": encodeURIComponent(code) },
+      body: body ? JSON.stringify(body) : undefined,
+    });
+    if (res.status === 401) { showGate(true); throw new Error("bad_code"); }
+    if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || "http_" + res.status);
+    return res.json();
+  }
+
+  function plural(n, one, few, many) {
+    const m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return one;
+    if (m10 >= 2 && m10 <= 4 && (m100 < 12 || m100 > 14)) return few;
+    return many;
+  }
+  const myName = () => (els.name.value || "").trim().slice(0, 40);
+  function setStatus(text, cls) {
+    els.status.textContent = text;
+    els.status.className = "status" + (cls ? " " + cls : "");
+  }
+
+  function renderRsvp() {
+    const going = state.rsvps.filter((r) => r.status === "yes");
+    const no = state.rsvps.filter((r) => r.status === "no").length;
+    els.count.textContent = String(going.length);
+    els.countWord.textContent = plural(going.length, "гость придёт", "гостя придут", "гостей придут");
+    els.countSub.textContent = no ? "Не смогут: " + no : "";
+    els.countSub.hidden = !no;
+
+    els.guests.replaceChildren();
+    going.sort((a, b) => a.at - b.at).forEach((r) => {
+      const li = document.createElement("li");
+      li.textContent = r.name || "Гость без имени";
+      if (r.mine) li.classList.add("me");
+      els.guests.appendChild(li);
+    });
+
+    const mine = state.me;
+    const off = !online || saving;
+    els.yes.disabled = off || mine?.status === "yes";
+    els.no.disabled = off || mine?.status === "no";
+    els.yes.classList.toggle("picked", mine?.status === "yes");
+    els.no.classList.toggle("picked", mine?.status === "no");
+
+    if (!online) return;
+    if (mine?.status === "yes") setStatus("Ты в списке гостей. Передумаешь — нажми «Не буду».", "yes");
+    else if (mine?.status === "no") setStatus("Ответ записан: не придёшь. Передумаешь — нажми «Буду».");
+    else setStatus("Ответ можно будет поменять в любой момент.");
+  }
+
+  const fmt = new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" });
+  function renderComments() {
+    const sorted = state.comments.slice().sort((a, b) => b.at - a.at);
+    els.thread.replaceChildren();
+    if (!sorted.length) {
+      const li = document.createElement("li");
+      const p = document.createElement("p");
+      p.className = "empty";
+      p.textContent = "Пока никто не написал. Начни первым: расскажи, какой будет костюм.";
+      li.appendChild(p);
+      els.thread.appendChild(li);
+      return;
+    }
+    sorted.forEach((c) => {
+      const li = document.createElement("li");
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      const who = document.createElement("span");
+      who.className = "who";
+      who.textContent = c.name || "Гость";
+      meta.appendChild(who);
+      if (c.going) {
+        const tag = document.createElement("span");
+        tag.className = "tag";
+        tag.textContent = "придёт";
+        meta.appendChild(tag);
+      }
+      const time = document.createElement("time");
+      time.textContent = fmt.format(new Date(c.at));
+      meta.appendChild(time);
+      if (c.mine) {
+        const del = document.createElement("button");
+        del.type = "button";
+        del.className = "btn-del";
+        del.textContent = "Удалить";
+        let armed = false, timer = null;
+        del.addEventListener("click", async () => {
+          if (!armed) {
+            armed = true;
+            del.textContent = "Точно удалить?";
+            del.classList.add("armed");
+            timer = setTimeout(() => { armed = false; del.textContent = "Удалить"; del.classList.remove("armed"); }, 4000);
+            return;
+          }
+          clearTimeout(timer);
+          del.disabled = true;
+          del.textContent = "Удаляю…";
+          try { apply(await api("DELETE", "/api/comments/" + c.id)); }
+          catch (e) {
+            del.disabled = false; del.textContent = "Удалить"; del.classList.remove("armed"); armed = false;
+            els.chatHint.textContent = "Не получилось удалить комментарий. Попробуй ещё раз.";
+            els.chatHint.classList.add("err");
+          }
+        });
+        meta.appendChild(del);
+      }
+      const msg = document.createElement("p");
+      msg.className = "msg";
+      msg.textContent = c.text;
+      li.append(meta, msg);
+      els.thread.appendChild(li);
+    });
+  }
+
+  function updateSendState() {
+    els.send.disabled = !online || sending || !els.text.value.trim();
+  }
+
+  function apply(s) {
+    state = s;
+    if (state.me && !els.name.value) els.name.value = state.me.name || "";
+    renderRsvp();
+    renderComments();
+    updateSendState();
+  }
+
+  async function refresh() {
+    try {
+      apply(await api("GET", "/api/state"));
+      online = true;
+      renderRsvp(); updateSendState();
+    } catch (e) {
+      if (e.message !== "bad_code") {
+        online = false;
+        renderRsvp(); updateSendState();
+        setStatus("Нет связи с сервером. Пробую переподключиться…", "err");
+      }
+    }
+  }
+
+  async function answer(status) {
+    if (!online || saving || state.me?.status === status) return;
+    const name = myName();
+    if (!name) {
+      setStatus("Сначала напиши, как тебя подписать.", "err");
+      els.name.focus();
+      return;
+    }
+    saving = true; renderRsvp();
+    let failed = false;
+    try {
+      const s = await api("POST", "/api/rsvp", { status, name });
+      store.set("halloween-name", name);
+      saving = false; apply(s);
+    } catch (e) { failed = true; }
+    saving = false; renderRsvp();
+    if (failed) setStatus("Не удалось сохранить ответ. Попробуй ещё раз.", "err");
+  }
+
+  els.yes.addEventListener("click", () => answer("yes"));
+  els.no.addEventListener("click", () => answer("no"));
+  els.name.addEventListener("change", () => store.set("halloween-name", myName()));
+  els.text.addEventListener("input", updateSendState);
+
+  els.compose.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    const text = els.text.value.trim().slice(0, 600);
+    if (!text || !online || sending) return;
+    const name = myName();
+    if (!name) {
+      els.chatHint.textContent = "Напиши своё имя в поле «Как тебя подписать» выше.";
+      els.chatHint.classList.add("err");
+      els.name.focus();
+      return;
+    }
+    sending = true; updateSendState();
+    try {
+      const s = await api("POST", "/api/comments", { name, text });
+      els.text.value = "";
+      store.set("halloween-name", name);
+      els.chatHint.textContent = "Подпись берётся из поля «Как тебя подписать».";
+      els.chatHint.classList.remove("err");
+      apply(s);
+    } catch (e) {
+      els.chatHint.textContent = e.message === "full"
+        ? "Комментариев слишком много, новые не принимаются."
+        : "Комментарий не отправился. Попробуй ещё раз.";
+      els.chatHint.classList.add("err");
+    }
+    sending = false; updateSendState();
+  });
+
+  // Код доступа
+  function showGate(wrong) {
+    els.gate.hidden = false;
+    els.gateErr.hidden = !wrong || !code;
+    setTimeout(() => els.gateCode.focus(), 50);
+  }
+  els.gateForm.addEventListener("submit", async (ev) => {
+    ev.preventDefault();
+    code = els.gateCode.value.trim();
+    try {
+      await api("GET", "/api/check");
+      store.set("halloween-code", code);
+      els.gate.hidden = true;
+      start();
+    } catch (e) { els.gateErr.hidden = false; }
+  });
+
+  // Живые обновления
+  let events = null;
+  function listen() {
+    if (events) events.close();
+    events = new EventSource("/api/events?code=" + encodeURIComponent(code));
+    events.addEventListener("changed", refresh);
+    events.onopen = refresh;
+  }
+  function start() { refresh(); listen(); }
+
+  const saved = store.get("halloween-name");
+  if (saved) els.name.value = saved;
+  els.yes.disabled = els.no.disabled = true;
+  updateSendState();
+  setStatus("Загружаю ответы…");
+
+  fetch("/api/config").then((r) => r.json()).then((cfg) => {
+    if (!cfg.needCode) return start();
+    fetch("/api/check", { headers: { "X-Access-Code": encodeURIComponent(code) } })
+      .then((r) => (r.ok ? start() : showGate(!!code)))
+      .catch(() => showGate(false));
+  }).catch(() => setStatus("Нет связи с сервером. Обнови страницу.", "err"));
+})();
+</script>
+</body>
+</html>
